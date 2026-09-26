@@ -10,10 +10,13 @@ app.use(cors());
 app.use(express.json());
 
 
+// Search API
 app.get("/api/search", async (req, res) => {
 
     const query = req.query.q;
 
+
+    // Check search query
     if (!query) {
 
         return res.status(400).json({
@@ -23,53 +26,87 @@ app.get("/api/search", async (req, res) => {
     }
 
 
-    // Temporary demo research results
-    const demoResults = [
+    // Check SerpApi key
+    if (!process.env.SERPAPI_KEY) {
 
-        {
-            title: `Introduction to ${query}`,
-            link:
-                "https://www.google.com/search?q=" +
-                encodeURIComponent(query),
+        return res.status(500).json({
+            error: "SerpApi API key is not configured."
+        });
 
-            source: "Google Search",
-
-            snippet:
-                `Learn the basics, concepts, and important information about ${query}.`
-        },
+    }
 
 
-        {
-            title: `${query} - Research Overview`,
-            link:
-                "https://www.google.com/search?q=" +
-                encodeURIComponent(query),
+    try {
 
-            source: "Research Sources",
-
-            snippet:
-                `Explore useful information and research sources related to ${query}.`
-        },
+        const serpApiUrl =
+            "https://serpapi.com/search.json" +
+            "?engine=google" +
+            "&q=" +
+            encodeURIComponent(query) +
+            "&api_key=" +
+            encodeURIComponent(process.env.SERPAPI_KEY);
 
 
-        {
-            title: `Latest Information About ${query}`,
-            link:
-                "https://www.google.com/search?q=" +
-                encodeURIComponent(query),
+        const response = await fetch(serpApiUrl);
 
-            source: "Web Research",
 
-            snippet:
-                `Find articles, resources, and additional information about ${query}.`
+        const data = await response.json();
+
+
+        // SerpApi API error
+        if (!response.ok) {
+
+            console.error("SerpApi error:", data);
+
+            return res.status(response.status).json({
+                error:
+                    data.error ||
+                    "SerpApi search request failed."
+            });
+
         }
 
-    ];
+
+        // Convert SerpApi results into our app format
+        const results =
+            (data.organic_results || [])
+                .slice(0, 5)
+                .map(result => ({
+
+                    title:
+                        result.title || "Untitled Result",
+
+                    link:
+                        result.link || "#",
+
+                    source:
+                        result.displayed_link ||
+                        "Google Search",
+
+                    snippet:
+                        result.snippet ||
+                        "No description available."
+
+                }));
 
 
-    res.json({
-        results: demoResults
-    });
+        res.json({
+            query: query,
+            results: results
+        });
+
+
+    } catch (error) {
+
+        console.error("Search error:", error);
+
+
+        res.status(500).json({
+            error:
+                "Unable to fetch research results."
+        });
+
+    }
 
 });
 
