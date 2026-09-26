@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ResearchMate - Smart Research Assistant</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="logo">
+            🔎 ResearchMate
+        </div>
+
+        <p>
+            Smart Web Research Assistant
+        </p>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+
+        <!-- Hero Section -->
+        <section class="hero">
+
+            <h1>
+                Research Smarter, Not Harder
+            </h1>
+
+            <p>
+                Search the web, discover useful sources,
+                and organize your research in one place.
+            </p>
+
+        </section>
+
+
+        <!-- Search Section -->
+        <section class="search-section">
+
+            <label for="searchInput">
+                What do you want to research?
+            </label>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Example: Artificial Intelligence in Education"
+                >
+
+                <button id="searchButton">
+                    Search
+                </button>
+
+                <button id="clearButton">
+                    Clear
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Loading Message -->
+        <div
+            id="loadingMessage"
+            class="message hidden"
+        >
+
+            <span class="loading-spinner"></span>
+
+            <span>
+                Searching for useful research sources...
+            </span>
+
+        </div>
+
+
+        <!-- Error Message -->
+        <div
+            id="errorMessage"
+            class="message error hidden"
+        >
+        </div>
+
+
+        <!-- Search History -->
+        <section class="history-section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Recent Searches
+                </h2>
+
+                <button id="clearHistoryButton">
+                    Clear History
+                </button>
+
+            </div>
+
+            <div id="historyContainer">
+
+                <p>
+                    No recent searches yet.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results Section -->
+        <section class="results-section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Research Results
+                </h2>
+
+                <span id="resultCount">
+                    0 results
+                </span>
+
+            </div>
+
+
+            <!-- Results will appear here -->
+            <div
+                id="resultsContainer"
+                class="results-container"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📚
+                    </div>
+
+                    <h3>
+                        Start Your Research
+                    </h3>
+
+                    <p>
+                        Enter a topic above to discover
+                        useful information and sources.
+                    </p>
+
+                    <div class="research-tip">
+                        💡 Tip: Try specific topics for more focused results.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>
+            ResearchMate © 2026
+        </p>
+
+        <p>
+            Built with HTML, CSS, JavaScript, Node.js &amp; Express
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
